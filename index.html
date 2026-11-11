@@ -4,91 +4,358 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DANYA LAB</title>
+
+    <meta name="description" content="DANYA LAB — створення сайтів, програмування Arduino, ESP32 та інших мікроконтролерів.">
+
+    <meta name="theme-color" content="#080d18">
+
+    <title>DANYA LAB — Розробка та програмування</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <header class="site-header">
     <div class="container header-content">
-        <a href="index.html" class="logo">DANYA LAB</a>
+
+        <a href="#" class="logo">
+            DANYA<span>LAB</span>
+        </a>
+
         <nav>
             <a href="#services">Послуги</a>
+            <a href="#platforms">Платформи</a>
             <a href="#projects">Проєкти</a>
             <a href="#about">Про мене</a>
             <a href="#contacts">Контакти</a>
         </nav>
+
     </div>
 </header>
 
 <main>
 
+    <!-- ГОЛОВНИЙ ЕКРАН -->
+
     <section class="hero container">
-        <h1>Ласкаво просимо до DANYA LAB!</h1>
-        <p>Мої електронні проєкти, Arduino та технічні рішення.</p>
+
+        <div class="hero-content">
+
+            <span class="hero-label">
+                DIGITAL DEVELOPMENT STUDIO
+            </span>
+
+            <h1>
+                Твої ідеї —<br>
+                <span>наші розробки.</span>
+            </h1>
+
+            <p>
+                Створення сайтів, програмування мікроконтролерів
+                та допомога з реалізацією технічних ідей.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#services" class="button primary">
+                    Наші послуги
+                </a>
+
+                <a href="#contacts" class="button secondary">
+                    Зв'язатися
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="hero-decoration">
+
+            <div class="code-box">
+
+                <span class="code-blue">&lt;DANYA LAB /&gt;</span>
+
+                <br><br>
+
+                <span>Development</span>
+                <br>
+                <span>Programming</span>
+                <br>
+                <span>Technology</span>
+
+                <br><br>
+
+                <span class="code-green">// Let's create!</span>
+
+            </div>
+
+        </div>
+
     </section>
 
-    <section class="container" id="services">
-        <h2>Мої послуги</h2>
+    <!-- ПОСЛУГИ -->
+
+    <section class="section container" id="services">
+
+        <div class="section-heading">
+
+            <span>WHAT WE DO</span>
+
+            <h2>Наші послуги</h2>
+
+            <p>
+                Допомагаємо реалізовувати технічні та цифрові ідеї.
+            </p>
+
+        </div>
 
         <div class="cards">
+
             <div class="card">
-                <h3>Arduino</h3>
-                <p>Допомога з Arduino, електронікою та створенням власних проєктів.</p>
+
+                <div class="card-icon">⌨️</div>
+
+                <h3>Написання коду</h3>
+
+                <p>
+                    Створення програм для Arduino, ESP32,
+                    ESP8266 та інших підтримуваних
+                    мікроконтролерних платформ.
+                </p>
+
+                <div class="card-price">
+                    Від 200 грн
+                </div>
+
             </div>
 
             <div class="card">
-                <h3>OBS Studio</h3>
-                <p>Допомога з налаштуванням OBS Studio для запису та стримів.</p>
+
+                <div class="card-icon">🌐</div>
+
+                <h3>Створення сайтів</h3>
+
+                <p>
+                    Розробка сайтів-візиток, особистих сторінок
+                    та невеликих вебпроєктів.
+                </p>
+
+                <div class="card-price">
+                    Від 200 грн
+                </div>
+
             </div>
+
+            <div class="card">
+
+                <div class="card-icon">🛠️</div>
+
+                <h3>Доопрацювання сайтів</h3>
+
+                <p>
+                    Зміна дизайну, додавання функцій,
+                    виправлення помилок та покращення сайтів.
+                </p>
+
+                <div class="card-price">
+                    Від 100 грн
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-icon">💬</div>
+
+                <h3>Консультації</h3>
+
+                <p>
+                    Допомога з програмуванням, налаштуванням
+                    та реалізацією технічних ідей.
+                </p>
+
+                <div class="card-price">
+                    Від 100 грн
+                </div>
+
+            </div>
+
         </div>
+
+        <p class="price-note">
+            Остаточна вартість залежить від складності завдання.
+            Ціна погоджується до початку роботи.
+        </p>
+
     </section>
 
-    <section class="container" id="projects">
-        <h2>Мої проєкти</h2>
+    <!-- ПЛАТФОРМИ -->
+
+    <section class="section platforms-section" id="platforms">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <span>MICROCONTROLLERS</span>
+
+                <h2>Платформи</h2>
+
+                <p>
+                    Програмування різних мікроконтролерних платформ.
+                </p>
+
+            </div>
+
+            <div class="platform-list">
+
+                <div class="platform">Arduino</div>
+                <div class="platform">ESP32</div>
+                <div class="platform">ESP32-C3</div>
+                <div class="platform">ESP32-S2</div>
+                <div class="platform">ESP32-S3</div>
+                <div class="platform">ESP32-C6</div>
+                <div class="platform">ESP8266</div>
+                <div class="platform">NodeMCU</div>
+                <div class="platform">Wemos D1 mini</div>
+                <div class="platform">ATmega</div>
+                <div class="platform">ATtiny</div>
+                <div class="platform">AVR</div>
+                <div class="platform">STM32</div>
+                <div class="platform">Teensy</div>
+                <div class="platform">Seeed XIAO</div>
+                <div class="platform">Інші MCU</div>
+
+            </div>
+
+            <p class="platform-note">
+                Підтримка конкретної плати та можливість виконання
+                завдання уточнюються перед початком роботи.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- ПРОЄКТИ -->
+
+    <section class="section container" id="projects">
+
+        <div class="section-heading">
+
+            <span>MY WORK</span>
+
+            <h2>Мої проєкти</h2>
+
+            <p>
+                Власні розробки та технічні експерименти.
+            </p>
+
+        </div>
 
         <div class="projects">
+
             <a href="campotik.html" class="project-card">
+
+                <div class="project-icon">⚡</div>
+
                 <h3>Campotik</h3>
-                <p>Мій власний електронний проєкт на ESP32-C3.</p>
-                <span class="status">Готовий</span>
+
+                <p>
+                    Мій власний електронний проєкт
+                    на базі ESP32-C3.
+                </p>
+
+                <span class="project-link">
+                    Переглянути проєкт →
+                </span>
+
             </a>
+
         </div>
+
     </section>
 
-    <section class="container" id="about">
-        <h2>Про мене</h2>
-        <p>
-            Я захоплююся електронікою, програмуванням та створенням
-            власних технічних проєктів. На цьому сайті я показую
-            свої роботи та ділюся досвідом.
-        </p>
+    <!-- ПРО МЕНЕ -->
+
+    <section class="section about-section" id="about">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <span>ABOUT DANYA LAB</span>
+
+                <h2>Про мене</h2>
+
+            </div>
+
+            <p class="about-text">
+
+                DANYA LAB — мій особистий проєкт,
+                присвячений програмуванню, електроніці
+                та веброзробці.
+
+                Я захоплююся створенням власних технічних
+                рішень, роботою з мікроконтролерами
+                та розробкою сайтів.
+
+                Тут можна отримати допомогу з реалізацією
+                власних цифрових ідей.
+
+            </p>
+
+        </div>
+
     </section>
 
-    <section class="container contacts" id="contacts">
-        <h2>Контакти</h2>
+    <!-- КОНТАКТИ -->
 
-        <p>Для зв'язку та обговорення проєктів пишіть мені в Telegram:</p>
+    <section class="section container contacts" id="contacts">
 
-        <a class="telegram-button" href="https://t.me/Danyalabbb" target="_blank" rel="noopener noreferrer">
-            Мій Telegram
+        <div class="section-heading">
+
+            <span>CONTACT US</span>
+
+            <h2>Є ідея? Звертайся!</h2>
+
+            <p>
+                Опиши своє завдання, і ми обговоримо,
+                як його можна реалізувати.
+            </p>
+
+        </div>
+
+        <a
+            class="telegram-button"
+            href="https://t.me/Danyalabbb"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Написати в Telegram →
         </a>
 
-        <div class="order-info">
-            <h3>Як оформити замовлення?</h3>
-            <p>
-                Щоб оформити замовлення, вам потрібно самостійно
-                придбати компоненти, які будуть потрібні для вашого
-                проєкту. Перед цим ми узгодимо список необхідних
-                деталей та їхню кількість.
-            </p>
-        </div>
     </section>
 
 </main>
 
+<!-- FOOTER -->
+
 <footer class="site-footer">
-    <p>© 2026 DANYA LAB</p>
+
+    <a href="#" class="logo">
+        DANYA<span>LAB</span>
+    </a>
+
+    <p>
+        © 2026 DANYA LAB. Усі права захищені.
+    </p>
+
+    <p class="footer-description">
+        Programming • Development • Technology
+    </p>
+
 </footer>
 
 </body>
