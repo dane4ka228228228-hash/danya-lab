@@ -1,3 +1,4 @@
+
 /* ==============================
    ОСНОВНІ НАЛАШТУВАННЯ
 ============================== */
@@ -161,7 +162,9 @@ nav a:hover {
     color: white;
 }
 
-/* Декоративний блок з кодом */
+/* ==============================
+   АНІМОВАНЕ ВІКОНЦЕ З КОДОМ
+============================== */
 
 .hero-decoration {
     width: 340px;
@@ -176,7 +179,9 @@ nav a:hover {
     box-shadow: 0 0 45px rgba(22, 135, 255, 0.12);
     font-family: Consolas, monospace;
     color: #a9bddb;
-    transform: rotate(2deg);
+
+    transform-origin: center;
+    animation: floating-window 4s ease-in-out infinite;
 }
 
 .code-blue {
@@ -186,6 +191,30 @@ nav a:hover {
 
 .code-green {
     color: #38d996;
+}
+
+/* Рух віконця вправо-вліво */
+
+@keyframes floating-window {
+    0% {
+        transform: rotate(2deg) translateY(0);
+    }
+
+    25% {
+        transform: rotate(-2deg) translateY(-8px);
+    }
+
+    50% {
+        transform: rotate(2deg) translateY(0);
+    }
+
+    75% {
+        transform: rotate(-2deg) translateY(8px);
+    }
+
+    100% {
+        transform: rotate(2deg) translateY(0);
+    }
 }
 
 /* ==============================
@@ -556,7 +585,8 @@ nav a:hover {
     }
 
     .code-box {
-        transform: none;
+        /* Анімація продовжує працювати на телефоні */
+        padding: 30px;
     }
 }
 
@@ -610,5 +640,22 @@ nav a:hover {
 
     .campotik-gallery img {
         height: 250px;
+    }
+}
+
+/* ==============================
+   ЗМЕНШЕННЯ АНІМАЦІЙ ЗА БАЖАННЯМ
+   КОРИСТУВАЧА В НАЛАШТУВАННЯХ ОС
+============================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .code-box {
+        animation: none;
+        transform: rotate(2deg);
+    }
+
+    html {
+        scroll-behavior: auto;
     }
 }
