@@ -1,7 +1,6 @@
-
 // ======================================
 // DANYA LAB
-// INTERACTIVE PARTICLE CIRCLE
+// INDEPENDENT INTERACTIVE PARTICLES
 // ======================================
 
 const canvas = document.getElementById("particle-bg");
@@ -12,19 +11,39 @@ let height = 0;
 
 let particles = [];
 
-let targetX = window.innerWidth / 2;
-let targetY = window.innerHeight / 2;
+const PARTICLE_COLOR = "45, 153, 255";
 
-let currentX = targetX;
-let currentY = targetY;
-
-let radius = 250;
-
-// Обмежуємо навантаження на пристрій
-const isMobile = () => window.innerWidth < 700;
+const isMobile = () => window.innerWidth <= 800;
 
 // ======================================
-// РОЗМІРИ CANVAS
+// КУРСОР І ДОТИК
+// ======================================
+
+const pointer = {
+    x: -1000,
+    y: -1000,
+    active: false,
+    type: "mouse"
+};
+
+// ======================================
+// НАЛАШТУВАННЯ
+// ======================================
+
+const settings = {
+    desktopCount: 155,
+    mobileCount: 65,
+
+    desktopRadius: 155,
+    mobileRadius: 115,
+
+    pushForce: 3.0,
+    returnForce: 0.012,
+    friction: 0.91
+};
+
+// ======================================
+// РОЗМІР CANVAS
 // ======================================
 
 function resizeCanvas() {
@@ -45,8 +64,6 @@ function resizeCanvas() {
 
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    radius = Math.min(width, height) * 0.38;
-
     createParticles();
 }
 
@@ -58,27 +75,36 @@ function createParticles() {
 
     particles = [];
 
-    const count = isMobile() ? 85 : 150;
+    const count = isMobile()
+        ? settings.mobileCount
+        : settings.desktopCount;
 
     for (let i = 0; i < count; i++) {
 
-        const angle = Math.random() * Math.PI * 2;
-
-        const distance =
-            Math.sqrt(Math.random()) * radius;
-
-        const offsetX = Math.cos(angle) * distance;
-        const offsetY = Math.sin(angle) * distance;
+        const x = Math.random() * width;
+        const y = Math.random() * height;
 
         particles.push({
 
-            offsetX: offsetX,
-            offsetY: offsetY,
+            // Початкове положення
 
-            x: currentX + offsetX,
-            y: currentY + offsetY,
+            homeX: x,
+            homeY: y,
 
-            size: Math.random() * 1.8 + 1
+            // Поточне положення
+
+            x: x,
+            y: y,
+
+            // Швидкість
+
+            vx: 0,
+            vy: 0,
+
+            // Вигляд
+
+            size: Math.random() * 1.7 + 1,
+            opacity: Math.random() * 0.35 + 0.55
 
         });
 
@@ -87,29 +113,132 @@ function createParticles() {
 }
 
 // ======================================
-// РУХ ЗА МИШКОЮ ТА ДОТИКОМ
+// РУХ МИШКИ ТА ПАЛЬЦЯ
 // ======================================
 
-function moveTarget(event) {
+function updatePointer(event) {
 
-    targetX = event.clientX;
-    targetY = event.clientY;
+    pointer.x = event.clientX;
+    pointer.y = event.clientY;
+
+    pointer.active = true;
+    pointer.type = event.pointerType;
 
 }
 
 window.addEventListener(
     "pointermove",
-    moveTarget,
+    updatePointer,
     { passive: true }
 );
 
-// Повернення до центру, коли курсор залишає вікно
-window.addEventListener("pointerleave", () => {
+window.addEventListener(
+    "pointerdown",
+    updatePointer,
+    { passive: true }
+);
 
-    targetX = width / 2;
-    targetY = height / 2;
+// Коли палець забирають з екрана
+
+window.addEventListener("pointerup", (event) => {
+
+    if (event.pointerType === "touch") {
+        pointer.active = false;
+    }
+
+}, { passive: true });
+
+window.addEventListener("pointercancel", () => {
+    pointer.active = false;
+});
+
+// Коли курсор залишає вікно браузера
+
+window.addEventListener("pointerleave", (event) => {
+
+    if (event.pointerType !== "touch") {
+        pointer.active = false;
+    }
 
 });
+
+// ======================================
+// ВІДШТОВХУВАННЯ ТОЧОК
+// ======================================
+
+function moveParticle(particle) {
+
+    if (!pointer.active) {
+        return;
+    }
+
+    const dx = particle.x - pointer.x;
+    const dy = particle.y - pointer.y;
+
+    const distance = Math.sqrt(
+        dx * dx + dy * dy
+    );
+
+    const influenceRadius = isMobile()
+        ? settings.mobileRadius
+        : settings.desktopRadius;
+
+    if (
+        distance < influenceRadius &&
+        distance > 0
+    ) {
+
+        const force =
+            (influenceRadius - distance) /
+            influenceRadius;
+
+        const angle = Math.atan2(dy, dx);
+
+        const push = force * settings.pushForce;
+
+        particle.vx += Math.cos(angle) * push;
+        particle.vy += Math.sin(angle) * push;
+
+    }
+
+}
+
+// ======================================
+// ПОВЕРНЕННЯ ТОЧОК
+// ======================================
+
+function returnParticle(particle) {
+
+    const dx = particle.homeX - particle.x;
+    const dy = particle.homeY - particle.y;
+
+    particle.vx += dx * settings.returnForce;
+    particle.vy += dy * settings.returnForce;
+
+}
+
+// ======================================
+// МАЛЮВАННЯ ТОЧОК
+// ======================================
+
+function drawParticle(particle) {
+
+    ctx.beginPath();
+
+    ctx.arc(
+        particle.x,
+        particle.y,
+        particle.size,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fillStyle =
+        `rgba(${PARTICLE_COLOR}, ${particle.opacity})`;
+
+    ctx.fill();
+
+}
 
 // ======================================
 // ГОЛОВНА АНІМАЦІЯ
@@ -119,88 +248,33 @@ function animateParticles() {
 
     ctx.clearRect(0, 0, width, height);
 
-    // Плавний рух кола
-    currentX += (targetX - currentX) * 0.045;
-    currentY += (targetY - currentY) * 0.045;
-
-    // Малюємо точки
     for (const particle of particles) {
 
-        const destinationX =
-            currentX + particle.offsetX;
+        // Кожна точка окремо реагує на курсор
 
-        const destinationY =
-            currentY + particle.offsetY;
+        moveParticle(particle);
 
-        particle.x +=
-            (destinationX - particle.x) * 0.08;
+        // Повернення до свого початкового місця
 
-        particle.y +=
-            (destinationY - particle.y) * 0.08;
+        returnParticle(particle);
 
-        ctx.beginPath();
+        // Плавність руху
 
-        ctx.arc(
-            particle.x,
-            particle.y,
-            particle.size,
-            0,
-            Math.PI * 2
-        );
+        particle.vx *= settings.friction;
+        particle.vy *= settings.friction;
 
-        ctx.fillStyle = "rgba(45, 153, 255, 0.85)";
+        // Оновлення позиції
 
-        ctx.shadowBlur = 9;
-        ctx.shadowColor = "#1687ff";
+        particle.x += particle.vx;
+        particle.y += particle.vy;
 
-        ctx.fill();
+        // Малювання
+
+        drawParticle(particle);
 
     }
 
-    // З'єднуємо близькі точки лініями
-    ctx.shadowBlur = 0;
-
-    for (let i = 0; i < particles.length; i++) {
-
-        for (let j = i + 1; j < particles.length; j++) {
-
-            const dx =
-                particles[i].x - particles[j].x;
-
-            const dy =
-                particles[i].y - particles[j].y;
-
-            const distance =
-                Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 65) {
-
-                const opacity = 1 - distance / 65;
-
-                ctx.beginPath();
-
-                ctx.moveTo(
-                    particles[i].x,
-                    particles[i].y
-                );
-
-                ctx.lineTo(
-                    particles[j].x,
-                    particles[j].y
-                );
-
-                ctx.strokeStyle =
-                    `rgba(35, 130, 255, ${opacity * 0.25})`;
-
-                ctx.lineWidth = 0.7;
-
-                ctx.stroke();
-
-            }
-
-        }
-
-    }
+    // Жодних ліній між точками!
 
     requestAnimationFrame(animateParticles);
 
@@ -210,8 +284,8 @@ function animateParticles() {
 // ЗАПУСК
 // ======================================
 
-resizeCanvas();
-
 window.addEventListener("resize", resizeCanvas);
+
+resizeCanvas();
 
 animateParticles();
